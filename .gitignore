@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+.cache/
+.env
+.vite/
+vite.config.*.timestamp-*
+*.tsbuildinfo
+*-debug.log*
+logs/
+*.log
+supabase/fix_member_data_access.sql
+supabase/link_test_accounts.sql
+supabase/seed.sql
