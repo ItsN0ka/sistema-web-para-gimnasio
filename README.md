@@ -24,15 +24,6 @@ El acceso usa Supabase Auth. Al crear la cuenta se genera un perfil; el usuario 
 
 Para poblar Supabase, ejecuta `supabase/seed.sql` después del esquema. Luego crea una cuenta en la pantalla de acceso y asígnale el rol inicial `owner` desde el SQL Editor:
 
-```sql
-insert into public.gym_staff (user_id, full_name, role)
-select id, 'Nombre del administrador', 'owner'
-from auth.users
-where email = 'tu-correo@ejemplo.cl'
-on conflict (user_id) do update
-set full_name = excluded.full_name, role = 'owner';
-```
-
 Las políticas RLS limitan cada tabla al rol correspondiente. Para asignar el primer rol `owner`, ejecuta el SQL de bootstrap de arriba desde el SQL Editor; después podrás gestionar el personal en la aplicación.
 
 ## Producción
