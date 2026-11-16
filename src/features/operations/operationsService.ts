@@ -211,16 +211,24 @@ export async function loadOperations(moduleId: string, role: UserRole, userId: s
     const income = (paymentsResult.data ?? []).filter((item: any) => item.payment_status === 'Pagado').reduce((sum, item: any) => sum + Number(item.amount), 0)
     const pending = (paymentsResult.data ?? []).filter((item: any) => item.payment_status === 'Pendiente').reduce((sum, item: any) => sum + Number(item.amount), 0)
     const expenseTotal = (expensesResult.data ?? []).reduce((sum, item: any) => sum + Number(item.amount), 0)
+    const updatedAt = `Hoy, ${new Intl.DateTimeFormat('es-CL', { hour: '2-digit', minute: '2-digit' }).format(new Date())}`
     const reportRows = [
-      ['Socios registrados', String(membersResult.count ?? 0), 'Total de perfiles de socio'],
-      ['Membresías vigentes', String(membersResult.data?.filter((item: any) => item.membership_status === 'Vigente').length ?? 0), 'Estado vigente'],
-      ['Ingresos confirmados', money(income), 'Pagos con estado Pagado'],
-      ['Pagos pendientes', money(pending), 'Saldo pendiente de cobro'],
-      ['Asistencias registradas', String(visitsResult.count ?? 0), 'Historial de ingresos'],
-      ['Clases activas', String(classesResult.count ?? 0), 'Agenda activa'],
-      ['Gastos operativos', money(expenseTotal), 'Total registrado'],
+      { name: 'Socios registrados', value: String(membersResult.count ?? 0), detail: 'Total de perfiles de socio.', period: 'Acumulado' },
+      { name: 'Membresías vigentes', value: String(membersResult.data?.filter((item: any) => item.membership_status === 'Vigente').length ?? 0), detail: 'Socios con membresía en estado vigente.', period: 'Estado actual' },
+      { name: 'Ingresos confirmados', value: money(income), detail: 'Suma de pagos con estado Pagado.', period: 'Acumulado' },
+      { name: 'Pagos pendientes', value: money(pending), detail: 'Saldo pendiente de cobro.', period: 'Estado actual' },
+      { name: 'Asistencias registradas', value: String(visitsResult.count ?? 0), detail: 'Total de registros de asistencia.', period: 'Acumulado' },
+      { name: 'Clases activas', value: String(classesResult.count ?? 0), detail: 'Clases actualmente activas en la agenda.', period: 'Estado actual' },
+      { name: 'Gastos operativos', value: money(expenseTotal), detail: 'Suma de gastos operativos registrados.', period: 'Acumulado' },
     ]
-    return { title: 'Reportes', eyebrow: 'Inteligencia del negocio', description: 'Indicadores calculados desde los registros actuales.', primaryAction: 'Exportar CSV', columns: ['Indicador', 'Valor', 'Detalle'], canCreate: false, canEdit: false, fields: [], rows: reportRows.map(([label, current, detail]) => ({ id: label, values: { label, value: current, detail }, cells: [label, current, detail], status: 'Actualizado', tone: 'info' })) }
+    return {
+      title: 'Reportes', eyebrow: 'Inteligencia del negocio', description: 'Consulta los indicadores del gimnasio y abre cada reporte para ver su resultado.', primaryAction: 'Exportar CSV',
+      columns: ['Reporte', 'Periodo', 'Actualización', 'Responsable'], canCreate: false, canEdit: false, fields: [],
+      rows: reportRows.map((report) => ({
+        id: report.name, values: { value: report.value, detail: report.detail },
+        cells: [report.name, report.period, updatedAt, 'Automático'], status: 'Listo', tone: 'success',
+      })),
+    }
   }
 
   return demoData(moduleId, role)
