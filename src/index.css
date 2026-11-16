@@ -219,6 +219,23 @@ tbody tr:hover { background: #fdfdfb; }
 .operation-stats p { margin: 0; color: #858981; font-size: 10px; }
 .operation-panel .panel-header { padding-top: 17px; padding-bottom: 17px; }
 .table-actions { display: flex; gap: 8px; }
+.reports-panel .panel-header { min-height: 0; }
+.reports-table { width: 100%; border-collapse: collapse; }
+.reports-table th { padding: 13px 20px; color: #858980; background: #fff; font-size: 9px; letter-spacing: .09em; }
+.reports-table td { padding: 16px 20px; color: #4b5048; font-size: 12px; }
+.reports-table td:first-child { color: #353a33; font-weight: 600; }
+.reports-table th:last-child, .reports-table td:last-child { width: 48px; padding-left: 8px; padding-right: 16px; text-align: right; }
+.report-action-cell { text-align: right; }
+.report-open { width: 30px; height: 30px; display: inline-grid; place-items: center; padding: 0; border: 0; border-radius: 7px; color: #687066; background: transparent; cursor: pointer; }
+.report-open:hover { color: var(--ink); background: #f1f2ee; }
+.report-detail-content { padding: 22px 24px 8px; color: var(--muted); font-size: 12px; }
+.report-detail-content > p { margin: 0 0 8px; }
+.report-detail-content .report-detail-value { color: var(--ink); font: 800 30px 'Manrope'; letter-spacing: -.04em; }
+.report-detail-content dl { margin: 20px 0 8px; border-top: 1px solid var(--line); }
+.report-detail-content dl div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid #efefeb; }
+.report-detail-content dt { color: var(--muted); }
+.report-detail-content dd { margin: 0; color: var(--ink); font-weight: 600; text-align: right; }
+.report-detail-actions { padding: 12px 24px 22px; }
 .tone-neutral { color: #686c65; background: #efefeb; }
 .role-dashboard-grid { display: grid; grid-template-columns: minmax(300px, .8fr) minmax(420px, 1.2fr); gap: 18px; }
 .role-focus-card { position: relative; overflow: hidden; grid-row: span 2; min-height: 430px; display: flex; flex-direction: column; justify-content: flex-end; padding: 30px; border-radius: 14px; color: white; background: #222720; box-shadow: 0 18px 40px rgba(25,29,24,.12); }
